@@ -5,3 +5,7 @@ Add-Content .gitignore "`nfastenv/"
 Add-Content .gitignore "__pycache__/"
 Add-Content .gitignore "*.pyc"
 Add-Content .gitignore ".env"
+fastenv/
+__pycache__/
+*.pyc
+.env
