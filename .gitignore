@@ -1,3 +1,7 @@
 node_modules
 dist
 .env
+Add-Content .gitignore "`nfastenv/"
+Add-Content .gitignore "__pycache__/"
+Add-Content .gitignore "*.pyc"
+Add-Content .gitignore ".env"
