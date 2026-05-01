@@ -31,8 +31,9 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="mx-auto max-w-md rounded-3xl border border-slate-800 bg-slate-900/90 px-8 py-10 shadow-2xl shadow-slate-950/40">
-      <h1 className="text-3xl font-semibold text-white">Welcome back</h1>
-      <p className="mt-3 text-slate-400">Sign in to access your wallet, deposit, and transfers.</p>
+      <div className="mb-6 h-1.5 w-20 rounded-full bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-500"></div>
+      <h1 className="text-3xl font-semibold text-amber-100">Welcome back</h1>
+      <p className="mt-3 text-amber-200">Sign in to access your wallet, deposit, and transfers.</p>
 
       {error && <div className="mt-6 rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-rose-200">{error}</div>}
 
@@ -44,7 +45,7 @@ export default function Login({ onLogin }) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-sky-500"
+            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-amber-400"
           />
         </label>
 
@@ -55,14 +56,14 @@ export default function Login({ onLogin }) {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-sky-500"
+            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition focus:border-amber-400"
           />
         </label>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-2xl bg-sky-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400 disabled:opacity-70"
+          className="w-full rounded-2xl bg-amber-400 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-300 disabled:opacity-70"
         >
           {loading ? 'Signing in …' : 'Sign in'}
         </button>
@@ -70,7 +71,7 @@ export default function Login({ onLogin }) {
 
       <p className="mt-6 text-center text-sm text-slate-400">
         New to the app?{' '}
-        <Link to="/register" className="font-semibold text-white hover:text-sky-300">
+        <Link to="/register" className="font-semibold text-amber-200 hover:text-amber-100">
           Create an account
         </Link>
       </p>
