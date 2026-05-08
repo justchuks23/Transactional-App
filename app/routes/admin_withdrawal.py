@@ -18,10 +18,16 @@ def send_withdrawal(
         tx = db.query(models.Transaction).filter_by(id=transaction_id).first()
         if not tx:
             raise HTTPException(status_code=404, detail="Transaction not found")
+
         if tx.status != "pending":
             raise HTTPException(status_code=400, detail=f"Transaction status invalid: {tx.status}")
 
-        # Use real bank_code/account_number from user's linked bank
+        if tx.transfer_reference:
+            raise HTTPException(status_code=400, detail="Transfer already initiated")
+
+        if not tx.wallet:
+            raise HTTPException(status_code=400, detail="Wallet not found")
+
         user_bank = db.query(models.BankAccount).filter_by(user_id=tx.wallet.user_id).first()
         if not user_bank:
             raise HTTPException(status_code=400, detail="User bank account not found")
@@ -33,15 +39,23 @@ def send_withdrawal(
             reference=tx.idempotency_key
         )
 
-        if response.get("status") is True:
-            tx.transfer_reference = response["data"]["reference"]
-            db.commit()
-            print(f"[Transfer Initiated] Tx:{tx.id} Ref:{tx.transfer_reference}")
-            return {"status": "transfer initiated"}
-        else:
+        if not response.get("status"):
             db.rollback()
-            print("[Transfer Failed Response]", response)
-            raise HTTPException(status_code=400, detail="Paystack transfer unavailable. Business upgrade required.")
+            raise HTTPException(
+                status_code=400,
+                detail=response.get("message", "Transfer failed")
+            )
+
+        tx.transfer_reference = response["data"]["reference"]
+        tx.status = "processing"
+
+        db.commit()
+
+        return {"status": "transfer initiated"}
+
+    except HTTPException:
+        db.rollback()
+        raise
 
     except Exception as e:
         db.rollback()
