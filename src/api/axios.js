@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://transaction-app-uhk4.onrender.com/',
+  baseURL: 'https://transactionapp-cyan.vercel.app',
   headers: {
     'Content-Type': 'application/json',
   },
