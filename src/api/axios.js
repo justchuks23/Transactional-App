@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://transactionapp-cyan.vercel.app',
+  baseURL: 'https://transactional-app-zvo6-git-fast-fi-a7778b-justchuks23s-projects.vercel.app',
   headers: {
     'Content-Type': 'application/json',
   },
