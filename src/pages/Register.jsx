@@ -32,7 +32,14 @@ export default function Register({ onLogin }) {
       onLogin(token)
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.')
+      console.log(err.response?.data)
+      console.log(err.response?.status)
+
+      setError(
+        typeof err.response?.data?.detail === 'string'
+          ? err.response.data.detail
+          : JSON.stringify(err.response?.data)
+      )
     } finally {
       setLoading(false)
     }
