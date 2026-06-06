@@ -20,7 +20,7 @@ app = FastAPI(
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000, https://transactional-app-zvo6-git-master-justchuks23s-projects.vercel.app"],  # Replace "*" with frontend URL in production
+    allow_origins=["https://transactional-app-git-master-justchuks23s-projects.vercel.app, http://localhost:3000,"],  # Replace "*" with frontend URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
