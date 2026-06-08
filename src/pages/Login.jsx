@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
 import api from '../api/axios.js'
 
 export default function Login({ onLogin }) {
@@ -23,12 +24,34 @@ export default function Login({ onLogin }) {
       onLogin(token)
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.detail || 'Login failed. Please verify your credentials.')
+    console.group('LOGIN ERROR')
+
+    console.log('Full Error:', err)
+    console.log('Message:', err.message)
+
+    if (err.response) {
+      console.log('Response Status:', err.response.status)
+      console.log('Response Headers:', err.response.headers)
+      console.log('Response Data:', err.response.data)
+    }
+
+    if (err.request) {
+      console.log('Request:', err.request)
+    }
+
+    console.log('Config:', err.config)
+
+    console.groupEnd()
+
+    setError(
+      err.response?.data?.detail ||
+      err.message ||
+      'Login failed. Please verify your credentials.'
+    )
     } finally {
       setLoading(false)
     }
-  }
-
+  } 
   return (
     <div className="mx-auto max-w-md rounded-3xl border border-slate-800 bg-slate-900/90 px-8 py-10 shadow-2xl shadow-slate-950/40">
       <div className="mb-6 h-1.5 w-20 rounded-full bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-500"></div>

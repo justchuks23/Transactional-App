@@ -17,29 +17,31 @@ export default function Register({ onLogin }) {
     setLoading(true)
 
     try {
-      await api.post('/auth/register', {
+      const registerResponse = await api.post('/auth/register', {
         username,
         email,
         password,
         phone_number: phoneNumber,
       })
+      console.log('REGISTER RESPONSE:', registerResponse.data)
 
       const loginResponse = await api.post('/auth/login', {
         email,
         password,
       })
+      console.log('LOGIN RESPONSE:', loginResponse.data)
       const token = loginResponse.data.access_token
       onLogin(token)
       navigate('/dashboard')
     } catch (err) {
       console.log(err.response?.data)
-      console.log(err.response?.status)
+    console.log(err.response?.status)
 
-      setError(
-        typeof err.response?.data?.detail === 'string'
-          ? err.response.data.detail
-          : JSON.stringify(err.response?.data)
-      )
+    setError(
+      typeof err.response?.data?.detail === 'string'
+        ? err.response.data.detail
+        : JSON.stringify(err.response?.data)
+    )
     } finally {
       setLoading(false)
     }
